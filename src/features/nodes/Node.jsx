@@ -15,7 +15,7 @@ const Node = ({ x, y, size, onPressIn }) => {
       fill={nodeTypeColor[node.type]}
       strokeWidth={1}
       stroke={'black'}
-      onPressIn={onPressIn}
+      onPressIn={() => onPressIn(node)}
     />
   );
 };

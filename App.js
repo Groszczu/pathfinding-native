@@ -14,10 +14,16 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName='Nodes'>
-          <Stack.Screen name='Nodes' component={NodesScreen} />
+          <Stack.Screen
+            name='Nodes'
+            component={NodesScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen name='Tools' component={ToolsScreen} />
         </Stack.Navigator>
-        <StatusBar style='auto' />
+        <StatusBar hidden={true} />
       </NavigationContainer>
     </Provider>
   );

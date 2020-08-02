@@ -10,20 +10,24 @@ import StyledText from '../../components/StyledText';
 import styled from 'styled-components/native';
 
 const ButtonView = styled.View`
-  max-height: 50px;
   margin: 5px;
   padding: 8px;
   border-radius: 5px;
   background-color: #888;
 `;
 
+const StyledTouchable = styled.TouchableOpacity`
+  max-height: 10%;
+  height: 10%;
+`;
+
 const OperationButton = ({ text, onPress }) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <StyledTouchable onPress={onPress}>
       <ButtonView>
         <StyledText>{text}</StyledText>
       </ButtonView>
-    </TouchableOpacity>
+    </StyledTouchable>
   );
 };
 
