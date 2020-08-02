@@ -10,15 +10,22 @@ import StyledText from '../../components/StyledText';
 import styled from 'styled-components/native';
 
 const ButtonView = styled.View`
-  margin: 5px;
   padding: 8px;
   border-radius: 5px;
   background-color: #888;
+  height: 100%;
+  width: 100%;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StyledTouchable = styled.TouchableOpacity`
-  max-height: 10%;
-  height: 10%;
+  margin: 5px;
+  max-height: 60px;
+  height: 30%;
+  width: 50%;
+  max-width: 100px;
 `;
 
 const OperationButton = ({ text, onPress }) => {

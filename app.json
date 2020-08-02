@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "pathfinding-mobile",
-    "slug": "pathfinding-mobile",
+    "name": "pathfinding-native",
+    "slug": "pathfinding-native",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,6 +21,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "pathfinding tool built in React Native",
+    "githubUrl": "https://github.com/Groszczu/pathfinding-native"
   }
 }

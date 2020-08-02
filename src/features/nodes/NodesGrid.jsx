@@ -7,6 +7,10 @@ import { View, Dimensions, PanResponder } from 'react-native';
 import NodeTypes from './NodeTypes';
 import { setDrawTool } from '../tools/toolsSlice';
 
+const clamp = (val, min, max) => {
+  return val < min ? min : val > max ? max : val;
+};
+
 const NodesGrid = () => {
   const columns = useSelector(({ nodes }) => nodes.columns);
   const rows = useSelector(({ nodes }) => nodes.rows);
@@ -31,6 +35,8 @@ const NodesGrid = () => {
     onMoveShouldSetPanResponder: () => true,
     onPanResponderMove: (_evt, gestureState) => {
       const coords = getNodeCoords(gestureState);
+      coords.x = clamp(coords.x, 0, columns - 1);
+      coords.y = clamp(coords.y, 0, rows - 1);
       dispatch(setNodesType({ nodes: [coords], type: selectedTool }));
     },
     onPanResponderRelease: () => {
