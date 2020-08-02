@@ -51,7 +51,7 @@ const OperationsPanel = () => {
   const dispatch = useDispatch();
 
   const algorithm = mapAlgorithmIdToFunc(algorithmId);
-  const [pathfinding] = usePathfinding(
+  const [pathfinding, cancel] = usePathfinding(
     nodes,
     startNode,
     endNode,
@@ -61,9 +61,11 @@ const OperationsPanel = () => {
 
   const startOnClick = () => pathfinding();
   const clearOnClick = () => {
+    cancel();
     dispatch(clearNodes());
   };
   const resetOnClick = () => {
+    cancel();
     dispatch(resetNodes());
   };
 

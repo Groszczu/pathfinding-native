@@ -15,6 +15,7 @@ const usePathfinding = (
   animationFrameTime
 ) => {
   const dispatch = useDispatch();
+  const resultTimeout = useRef(null);
 
   const pathfinding = useCallback(() => {
     dispatch(startPathfinding());
@@ -22,17 +23,25 @@ const usePathfinding = (
     visited &&
       dispatch(setNodesType({ nodes: visited, type: NodeTypes.visited }));
 
-    dispatch(
-      result
-        ? setNodesType({
-            nodes: result,
-            type: NodeTypes.result,
-          })
-        : endPathfinding()
+    resultTimeout.current = setTimeout(
+      () =>
+        dispatch(
+          result
+            ? setNodesType({
+                nodes: result,
+                type: NodeTypes.result,
+              })
+            : endPathfinding()
+        ),
+      animationFrameTime * visited.length
     );
   }, [algorithm, nodes, startNode, endNode, animationFrameTime, dispatch]);
 
-  return [pathfinding];
+  const cancel = useCallback(() => clearTimeout(resultTimeout.current), [
+    resultTimeout,
+  ]);
+
+  return [pathfinding, cancel];
 };
 
 export default usePathfinding;
