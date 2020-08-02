@@ -11,6 +11,7 @@ const Node = ({ x, y, size, animationFrameTime, onPressIn }) => {
   const node = useSelector(({ nodes }) => nodes.nodes[y][x]);
   const { type, visitedIndex } = node;
 
+  // if visitedIndex is truthy node's color change will be animated
   useEffect(() => {
     Animated.timing(animationValue, {
       toValue: 1,
