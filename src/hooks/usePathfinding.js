@@ -1,7 +1,11 @@
 import { useCallback, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import NodeTypes from './NodeTypes';
-import { setNodesType, startPathfinding, endPathfinding } from './nodesSlice';
+import NodeTypes from '../features/nodes/NodeTypes';
+import {
+  setNodesType,
+  startPathfinding,
+  endPathfinding,
+} from '../features/nodes/nodesSlice';
 
 const usePathfinding = (
   nodes,
@@ -11,7 +15,6 @@ const usePathfinding = (
   animationFrameTime
 ) => {
   const dispatch = useDispatch();
-  const resultTimeout = useRef(null);
 
   const pathfinding = useCallback(() => {
     dispatch(startPathfinding());
@@ -19,25 +22,17 @@ const usePathfinding = (
     visited &&
       dispatch(setNodesType({ nodes: visited, type: NodeTypes.visited }));
 
-    resultTimeout.current = setTimeout(
-      () =>
-        dispatch(
-          result
-            ? setNodesType({
-                nodes: result,
-                type: NodeTypes.result,
-              })
-            : endPathfinding()
-        ),
-      animationFrameTime * visited.length
+    dispatch(
+      result
+        ? setNodesType({
+            nodes: result,
+            type: NodeTypes.result,
+          })
+        : endPathfinding()
     );
   }, [algorithm, nodes, startNode, endNode, animationFrameTime, dispatch]);
 
-  const cancel = useCallback(() => clearTimeout(resultTimeout.current), [
-    resultTimeout,
-  ]);
-
-  return [pathfinding, cancel];
+  return [pathfinding];
 };
 
 export default usePathfinding;

@@ -4,7 +4,16 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setDrawTool } from '../tools/toolsSlice';
 import InlineFlex from '../../components/InlineFlex';
-import { Button } from 'react-native';
+import { TouchableWithoutFeedback, FlatList } from 'react-native';
+import styled from 'styled-components/native';
+
+const DrawToolButton = styled.View`
+  background-color: ${(props) => nodeTypeColor[props.type]};
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+  opacity: ${(props) => (props.selected ? 1 : 0.6)};
+`;
 
 const DrawToolPicker = () => {
   const dispatch = useDispatch();
@@ -14,19 +23,19 @@ const DrawToolPicker = () => {
 
   return (
     <InlineFlex>
-      {Array.from(toolTypes).map((type) => (
-        <Button
-          aria-label={`${type} button`}
-          key={type}
-          onClick={() => boundSetToolType(type)}
-          selected={type === selectedDrawToolType}
-          style={{
-            backgroundColor: nodeTypeColor[type],
-            maxWidth: '.75em',
-            margin: '.2em',
-          }}
-        />
-      ))}
+      <FlatList
+        style={{ maxHeight: 50 }}
+        data={Array.from(toolTypes).map((type) => ({ key: type, data: type }))}
+        renderItem={({ item }) => (
+          <TouchableWithoutFeedback onPress={() => boundSetToolType(item.data)}>
+            <DrawToolButton
+              type={item.data}
+              selected={item.data === selectedDrawToolType}
+            />
+          </TouchableWithoutFeedback>
+        )}
+        horizontal={true}
+      />
     </InlineFlex>
   );
 };

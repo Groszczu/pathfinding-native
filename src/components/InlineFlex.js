@@ -1,11 +1,12 @@
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
-const InlineFlex = styled.span`
+const InlineFlex = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  max-width: 450px;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  flex-direction: ${props => props.row ? 'row' : 'column'};
 `;
 
 export default InlineFlex;

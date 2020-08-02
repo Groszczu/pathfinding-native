@@ -1,54 +1,57 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { setAnimationFrameTime } from './toolsSlice';
 import { pathfindingState } from '../nodes/nodesSlice';
-import Slider from '../../shared/Slider';
-import Label from '../../components/Label';
+import Slider from '@react-native-community/slider';
+import StyledText from '../../components/StyledText';
 import InlineFlex from '../../components/InlineFlex';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { StyleSheet } from 'react-native';
 
 const AnimationSpeedSlider = () => {
   const animationFrameTime = useSelector(
     ({ tools }) => tools.animationFrameTime
   );
-  const state = useSelector(({ nodes }) => nodes.pathfinding);
-  const dispatch = useDispatch();
   const [internalAnimationTime, setInternalAnimationTime] = useState(
     animationFrameTime
   );
+  const state = useSelector(({ nodes }) => nodes.pathfinding);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setInternalAnimationTime(animationFrameTime);
   }, [animationFrameTime]);
 
-  const handleChange = (e) => {
-    setInternalAnimationTime(e.target.value);
+  const handleSlidingComplete = (value) => {
+    dispatch(setAnimationFrameTime(value));
   };
-  const handleBlur = () => {
-    internalAnimationTime !== animationFrameTime &&
-      dispatch(setAnimationFrameTime(internalAnimationTime));
+
+  const handleValueChange = (value) => {
+    setInternalAnimationTime(value);
   };
 
   const isReady = state === pathfindingState.ready;
   return (
     <InlineFlex>
-      <Label htmlFor={'animation-speed-range'}>
-        Animation: {internalAnimationTime}ms
-      </Label>
+      <StyledText>Animation: {internalAnimationTime}ms</StyledText>
       <Slider
-        id={'animation-speed-range'}
-        value={internalAnimationTime}
+        style={styles.slider}
+        value={animationFrameTime}
         disabled={!isReady}
-        min={0}
-        max={250}
+        minimumValue={0}
+        maximumValue={250}
         step={10}
-        onChange={handleChange}
-        onBlur={handleBlur}
+        onValueChange={handleValueChange}
+        onSlidingComplete={handleSlidingComplete}
       />
     </InlineFlex>
   );
 };
+
+const styles = StyleSheet.create({
+  slider: {
+    width: '90%',
+    maxHeight: 40,
+  },
+});
 
 export default AnimationSpeedSlider;
