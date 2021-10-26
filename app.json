@@ -22,6 +22,7 @@
     },
     "android": {
       "package": "com.groszczu.pathfinding",
+      "versionCode": 1,
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-3578342616417763~1444269642"
       }
