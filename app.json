@@ -21,6 +21,7 @@
       }
     },
     "android": {
+      "package": "com.groszczu.pathfinding",
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-3578342616417763~1444269642"
       }
