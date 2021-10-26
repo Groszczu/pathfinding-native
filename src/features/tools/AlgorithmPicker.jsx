@@ -1,10 +1,11 @@
-import React from 'react';
-import algorithmId from '../../util/algorithms/algorithmId';
-import { useDispatch, useSelector } from 'react-redux';
-import { setPathfindingAlgorithm } from './toolsSlice';
-import InlineFlex from '../../components/InlineFlex';
-import StyledText from '../../components/StyledText';
-import { Picker, StyleSheet } from 'react-native';
+import React from "react";
+import algorithmId from "../../util/algorithms/algorithmId";
+import { useDispatch, useSelector } from "react-redux";
+import { setPathfindingAlgorithm } from "./toolsSlice";
+import InlineFlex from "../../components/InlineFlex";
+import StyledText from "../../components/StyledText";
+import { Picker } from "@react-native-picker/picker";
+import { StyleSheet } from "react-native";
 
 const AlgorithmPicker = () => {
   const selectedAlgorithm = useSelector(
@@ -32,10 +33,10 @@ const AlgorithmPicker = () => {
 
 const styles = StyleSheet.create({
   picker: {
-    width: '90%',
+    width: "90%",
     borderWidth: 3,
-    borderColor: 'black',
-    borderStyle: 'solid',
+    borderColor: "black",
+    borderStyle: "solid",
     borderRadius: 5,
     padding: 4,
   },

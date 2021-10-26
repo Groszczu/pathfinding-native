@@ -13,11 +13,17 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-3578342616417763~3017205760"
+      }
+    },
+    "android": {
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-3578342616417763~1444269642"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"

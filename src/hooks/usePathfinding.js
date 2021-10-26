@@ -1,11 +1,11 @@
-import { useCallback, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import NodeTypes from '../features/nodes/NodeTypes';
+import { useCallback, useRef } from "react";
+import { useDispatch } from "react-redux";
+import NodeTypes from "../features/nodes/NodeTypes";
 import {
   setNodesType,
   startPathfinding,
   endPathfinding,
-} from '../features/nodes/nodesSlice';
+} from "../features/nodes/nodesSlice";
 
 const usePathfinding = (
   nodes,
@@ -35,11 +35,14 @@ const usePathfinding = (
         ),
       animationFrameTime * visited.length
     );
+
+    return animationFrameTime * visited.length;
   }, [algorithm, nodes, startNode, endNode, animationFrameTime, dispatch]);
 
-  const cancel = useCallback(() => clearTimeout(resultTimeout.current), [
-    resultTimeout,
-  ]);
+  const cancel = useCallback(
+    () => clearTimeout(resultTimeout.current),
+    [resultTimeout]
+  );
 
   return [pathfinding, cancel];
 };

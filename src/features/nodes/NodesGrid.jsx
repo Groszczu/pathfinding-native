@@ -1,29 +1,33 @@
-import React, { useState, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Node from './Node';
-import { setNodesType } from './nodesSlice';
-import Svg from 'react-native-svg';
-import { View, Dimensions, PanResponder } from 'react-native';
-import NodeTypes from './NodeTypes';
-import { setDrawTool } from '../tools/toolsSlice';
+import React, { useState, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import Node from "./Node";
+import { setNodesType } from "./nodesSlice";
+import Svg from "react-native-svg";
+import { View, Dimensions, PanResponder } from "react-native";
+import NodeTypes from "./NodeTypes";
+import { setDrawTool } from "../tools/toolsSlice";
 
 const clamp = (val, min, max) => {
   return val < min ? min : val > max ? max : val;
 };
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 const NodesGrid = () => {
   const columns = useSelector(({ nodes }) => nodes.columns);
   const rows = useSelector(({ nodes }) => nodes.rows);
   const selectedTool = useSelector(({ tools }) => tools.drawTool);
-  const animationFrameTime = useSelector(({tools}) => tools.animationFrameTime);
+  const animationFrameTime = useSelector(
+    ({ tools }) => tools.animationFrameTime
+  );
   const dispatch = useDispatch();
   const [offsetX, setOffsetX] = useState(0);
   const [offsetY, setOffsetY] = useState(0);
   const draggingRef = useRef(false);
 
-  const nodeSize = Math.floor(Math.min(width / columns, (height * 0.75) / rows));
+  const nodeSize = Math.floor(
+    Math.min(width / columns, (height * 0.75) / rows)
+  );
 
   const getNodeCoords = (gestureState) => {
     const { x0, y0, dx, dy } = gestureState;
@@ -62,7 +66,7 @@ const NodesGrid = () => {
 
   return (
     <View
-      style={{ marginTop: '5%' }}
+      style={{ marginTop: "5%" }}
       onLayout={({
         nativeEvent: {
           layout: { x, y },

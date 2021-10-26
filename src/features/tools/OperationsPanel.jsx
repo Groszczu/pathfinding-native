@@ -1,13 +1,13 @@
-import React from 'react';
-import { clearNodes, resetNodes } from '../nodes/nodesSlice';
-import usePathfinding from '../../hooks/usePathfinding';
-import { useDispatch } from 'react-redux';
-import { pathfindingState } from '../nodes/nodesSlice';
-import { useSelector } from 'react-redux';
-import { mapAlgorithmIdToFunc } from '../../util/algorithms/algorithmId';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import StyledText from '../../components/StyledText';
-import styled from 'styled-components/native';
+import React from "react";
+import { clearNodes, resetNodes } from "../nodes/nodesSlice";
+import usePathfinding from "../../hooks/usePathfinding";
+import { useDispatch } from "react-redux";
+import { pathfindingState } from "../nodes/nodesSlice";
+import { useSelector } from "react-redux";
+import { mapAlgorithmIdToFunc } from "../../util/algorithms/algorithmId";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
+import StyledText from "../../components/StyledText";
+import styled from "styled-components/native";
 
 const ButtonView = styled.View`
   padding: 8px;
@@ -38,7 +38,7 @@ const OperationButton = ({ text, onPress }) => {
   );
 };
 
-const OperationsPanel = () => {
+const OperationsPanel = ({ onPathfindingFinished }) => {
   const nodes = useSelector(({ nodes }) => nodes.nodes);
   const startNode = useSelector(({ nodes }) => nodes.startNode);
   const endNode = useSelector(({ nodes }) => nodes.endNode);
@@ -59,7 +59,12 @@ const OperationsPanel = () => {
     animationFrameTime
   );
 
-  const startOnClick = () => pathfinding();
+  const startOnClick = () => {
+    const resultAfter = pathfinding();
+    setTimeout(() => {
+      onPathfindingFinished();
+    }, resultAfter);
+  };
   const clearOnClick = () => {
     cancel();
     dispatch(clearNodes());
@@ -72,11 +77,11 @@ const OperationsPanel = () => {
   return (
     <View style={styles.buttonsPanel}>
       {state === pathfindingState.ready ? (
-        <OperationButton text={'Start'} onPress={startOnClick} />
+        <OperationButton text={"Start"} onPress={startOnClick} />
       ) : (
-        <OperationButton text={'Clear'} onPress={clearOnClick} />
+        <OperationButton text={"Clear"} onPress={clearOnClick} />
       )}
-      <OperationButton text={'Reset'} onPress={resetOnClick} />
+      <OperationButton text={"Reset"} onPress={resetOnClick} />
     </View>
   );
 };
@@ -84,9 +89,9 @@ const OperationsPanel = () => {
 const styles = StyleSheet.create({
   buttonsPanel: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '100%',
+    flexDirection: "row",
+    justifyContent: "center",
+    width: "100%",
   },
 });
 
