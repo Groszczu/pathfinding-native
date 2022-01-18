@@ -6,12 +6,12 @@ import ContainerView from "../../components/ContainerView";
 import { useShowAd } from "../googleAds/adsContext";
 
 const NodesScreen = () => {
-  const showAd = useShowAd();
+  const { showInterstitial } = useShowAd();
 
   return (
     <ContainerView>
       <NodesGrid />
-      <OperationsPanel onPathfindingFinished={() => showAd()} />
+      <OperationsPanel onPathfindingFinished={() => showInterstitial()} />
       <NavigationButton text={"Tools"} navigateTo={"Tools"} />
     </ContainerView>
   );

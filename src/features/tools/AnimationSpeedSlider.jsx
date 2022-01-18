@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setAnimationFrameTime } from './toolsSlice';
-import { pathfindingState } from '../nodes/nodesSlice';
-import Slider from '@react-native-community/slider';
-import StyledText from '../../components/StyledText';
-import InlineFlex from '../../components/InlineFlex';
-import { StyleSheet } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setAnimationFrameTime } from "./toolsSlice";
+import { pathfindingState } from "../nodes/nodesSlice";
+import Slider from "@react-native-community/slider";
+import StyledText from "../../components/StyledText";
+import InlineFlex from "../../components/InlineFlex";
+import { Button, StyleSheet, Text } from "react-native";
+import { useEarnedRewards } from "../googleAds/rewardsContext";
+import { useShowAd } from "../googleAds/adsContext";
 
 const AnimationSpeedSlider = () => {
+  const { showRewarded } = useShowAd();
+  const { animationSpeed: isAnimationSpeedRewardEarned } = useEarnedRewards();
   const animationFrameTime = useSelector(
     ({ tools }) => tools.animationFrameTime
   );
-  const [internalAnimationTime, setInternalAnimationTime] = useState(
-    animationFrameTime
-  );
+  const [internalAnimationTime, setInternalAnimationTime] =
+    useState(animationFrameTime);
   const state = useSelector(({ nodes }) => nodes.pathfinding);
   const dispatch = useDispatch();
 
@@ -36,20 +39,26 @@ const AnimationSpeedSlider = () => {
       <Slider
         style={styles.slider}
         value={animationFrameTime}
-        disabled={!isReady}
+        disabled={!isReady || !isAnimationSpeedRewardEarned}
         minimumValue={0}
         maximumValue={250}
         step={10}
         onValueChange={handleValueChange}
         onSlidingComplete={handleSlidingComplete}
       />
+      {isAnimationSpeedRewardEarned ? null : (
+        <Button
+          title="Watch an ad to enable animation speed changes"
+          onPress={() => showRewarded("animation_speed")}
+        />
+      )}
     </InlineFlex>
   );
 };
 
 const styles = StyleSheet.create({
   slider: {
-    width: '90%',
+    width: "90%",
     maxHeight: 40,
   },
 });
